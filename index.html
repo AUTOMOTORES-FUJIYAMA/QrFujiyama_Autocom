@@ -564,6 +564,8 @@ function submitForm() {
                 const urlWhatsApp = `https://wa.me/${numeroAsesor}?text=${encodeURIComponent(mensaje)}`;
                 document.querySelector('#success-message a').href = urlWhatsApp;
 
+                document.getElementById('step-3').style.display = 'none';
+
                 // ocultar loader y mostrar éxito
                 document.getElementById('loading-message').style.display = 'none';
                 document.getElementById('success-message').style.display = 'block';
