@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Contacto</title>
+    <style>
+        :root {
+            --primary: #8f8f8f;
+            --portafolio: #298b81;
+            --secondary: #c1ccca;
+            --light: #f5f5f5;
+            --dark: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            margin-bottom: 1rem;
+        }
+
+        .logo img {
+            height: 80px;
+            width: auto;
+        }
+
+        h1 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            position: relative;
+            color: white;
+            font-weight: bold;
+        }
+
+        .step.active {
+            background-color: var(--secondary);
+        }
+
+        .step.completed {
+            background-color: var(--primary);
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 2px;
+            background-color: #ccc;
+            right: -20px;
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: rgb(3, 3, 3);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+
+        }
+
+        .qr-message {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 1rem;
+            background-color: #0a0a0a;
+            border-radius: 4px;
+            color: var(--secondary);
+        }
+ .verde-button {
+    background-color: var(--primary);
+    padding: 2rem 2rem;
+    border-radius: 4px;
+    color: rgb(255, 253, 253);
+    text-decoration: none;
+    display:inline-flex; /* Cambiamos a flex para alinear */
+    align-items: center; /* Centrado vertical */
+    gap: 8px; /* Espacio entre icono y texto */
+    margin-top: 2rem;
+    font-weight: 750;
+    transition: background-color 0.3s;
+               }
+
+    .verde-button:hover {
+    background-color: var(--secondary);
+                          }
+
+    .verde-button .boton-icono {
+    width: 35px;
+    height: 35px;
+                       }
+
+        .completed-message {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .completed-message img {
+            max-width: 100px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .form-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Ocultamos el checkbox original */
+#privacidad {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 8px;
+    transition: all 0.2s ease;
+}
+
+/* Efecto hover */
+#privacidad:hover {
+    border-color: #28a745; /* Verde */
+}
+
+/* Cuando está marcado */
+#privacidad:checked {
+    background-color: #28a745; /* Verde */
+    border-color: #28a745;
+}
+
+/* Icono de check dentro */
+#privacidad:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="logo.png" alt="Logo Fujiyama" />
+
+            </div>
+            
+           
+        </header>
+
+        <div class="qr-message">
+            <p>¡Bienvenido! Descubre más sobre este Kia aquí</p>
+        </div>
+
+        <div class="form-steps">
+            <div class="step active" data-step="1">1</div>
+            <div class="step" data-step="2">2</div>
+            <div class="step" data-step="3">3</div>
+        </div>
+
+        <div class="form-container">
+            <form id="contactForm">
+                <!-- Paso 1: Información personal -->
+                <div class="form-step active" id="step-1">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                        <div class="error" id="nombre-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error" id="email-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" required>
+                        <div class="error" id="telefono-error"></div>
+                    </div>
+                    <div class="navigation-buttons">
+                        <div></div>
+                        <button type="button" class="btn" onclick="nextStep(1)">Siguiente</button>
+                    </div>
+                </div>
+
+                <!-- Paso 2: Información adicional -->
+                <div class="form-step" id="step-2">
+                    <div class="form-group">
+                        <label for="ciudad">Ciudad</label>
+                        <input type="text" id="ciudad" name="ciudad" required>
+                        <div class="error" id="ciudad-error"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="origen">¿Lugar donde viste el vehículo o escaneaste el QR?</label>
+                        <select id="origen" name="origen">
+                            <option value="">Seleccione una opción</option>
+                            <option value="QR CC VIVA">CC VIVA Barranquilla</option>
+                            <option value="QR Vitrina">VITRINA</option>
+                        </select>
+                        <div class="error" id="origen-error"></div>
+                    </div>
+                   <div class="form-group">
+                        <label for="interes">Marca</label>
+                        <select id="interes" name="interes">
+                            <option value="">Seleccione una opción</option>
+                            <option value="JAC Motors Camiones">JAC Motors Camiones</option>
+                            <option value="JAC Electricos">JAC Electricos</option>
+                            <option value="JAC Motors Autos">JAC Motors Autos</option>
+                            <option value="KARRY">KARRY</option>
+                            <option value="JETOUR">JETOUR</option>
+                           
+                        </select>
+                        <div class="error" id="interes-error"></div>
+                    </div> 
+
+                    <div class="form-group">
+  <label for="modelo">Modelo</label>
+  <select id="modelo" name="modelo" disabled>
+    <option value="">Seleccione un modelo</option>
+  </select>
+</div>
+
+<script>
+  // Lista de modelos por marca
+  const modelosPorMarca = {
+    "JAC Motors Camiones": ["JHR LARGO", "JHR LARGO POWER", "JKR LARGO POWER","JKR DOBLE CABINA POWER", "JPR", "JQR", "JRR"],
+    "JAC Electricos": ["E10X", "E30X", "E40X"],
+    "JAC Motors Autos": ["S2 + Servicio Especial", "S2+Taxi", "S3 + Servicio Especial", "S2+Taxi"],
+    "KARRY": ["YOKI CHASIS", "YOYO MINIVAN", "YORI CHASIS","YORI CHASIS DOBLE CABINA"],
+    "JETOUR": ["NEW X70 SPORT", "NEW X70 LIMTED-AT DASHING URBAN", "X70 PLUS", "T2 Shine", "T2 Shadow"]
+  };
+
+  const selectMarca = document.getElementById("interes");
+  const selectModelo = document.getElementById("modelo");
+
+  selectMarca.addEventListener("change", function () {
+    const marca = this.value;
+
+    // Reiniciar opciones
+    selectModelo.innerHTML = '<option value="">Seleccione un modelo</option>';
+
+    if (marca && modelosPorMarca[marca]) {
+      // Habilitar select de modelos
+      selectModelo.disabled = false;
+
+      // Llenar modelos correspondientes
+      modelosPorMarca[marca].forEach(modelo => {
+        const option = document.createElement("option");
+        option.value = modelo;
+        option.textContent = modelo;
+        selectModelo.appendChild(option);
+      });
+    } else {
+      // Si no hay marca seleccionada → deshabilitar
+      selectModelo.disabled = true;
+    }
+  });
+</script>
+                    <div class="navigation-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">Anterior</button>
+                        <button type="button" class="btn" onclick="nextStep(2)">Siguiente</button>
+                    </div>
+                </div>
+
+                <!-- Paso 3: Confirmación -->
+                <div class="form-step" id="step-3">
+                    <div class="form-group">
+                        <label for="comentarios">Comentarios adicionales</label>
+                        <input type="text" id="comentarios" name="comentarios">
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="privacidad" name="privacidad" required>
+                        <label for="privacidad" style="display: inline;">Acepto la política de privacidad</label>
+                        <div class="error" id="privacidad-error"></div>
+                    </div>
+                    <div class="navigation-buttons">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
+                        
+                        <button type="button" class="btn" onclick="submitForm()">Enviar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Pantalla de éxito -->
+            <div id="success-message" class="completed-message" style="display: none;">
+                <img src="verificar.png" alt="OK" />
+
+                <h2>¡Gracias por completar el formulario!</h2>
+                <p>Un asesor se pondrá en contacto contigo pronto.</p>
+                <a href="https://wa.me/573178942092?" class="verde-button" target="_blank"> <img src="whatsapp.png" alt="whatsapp" class="boton-icono">Hablar con un asesor por WhatsApp </a>
+              <!--<a href="https://fujiyama.com.co/" class="verde-button" target="_blank"> <img src="modelado-3d.png" alt="modelado-3d" class="boton-icono">Ver todo nuestro portafolio Kia    </a>
+                <a href="https://fujiyama.com.co/concesionarios" class="verde-button" target="_blank"> <img src="ubicacion.png" alt="ubicacion" class="boton-icono">Conocer direcciones y horarios</a>-->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Almacenamiento de datos (simulando base de datos)
+        const database = JSON.parse(localStorage.getItem('formDatabase')) || [];
+
+        // Manejo de los pasos del formulario
+        function showStep(stepNumber) {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById(`step-${stepNumber}`).classList.add('active');
+            
+            // Actualizar indicadores de pasos
+            document.querySelectorAll('.step').forEach(step => {
+                const stepNum = parseInt(step.dataset.step);
+                step.classList.remove('active', 'completed');
+                if (stepNum === stepNumber) {
+                    step.classList.add('active');
+                } else if (stepNum < stepNumber) {
+                    step.classList.add('completed');
+                }
+            });
+        }
+
+        function nextStep(currentStep) {
+            // Validación antes de avanzar
+            if (validateStep(currentStep)) {
+                showStep(currentStep + 1);
+            }
+        }
+
+        function prevStep(currentStep) {
+            showStep(currentStep - 1);
+        }
+
+        function validateStep(step) {
+            let isValid = true;
+            
+            // Limpiar errores previos
+            document.querySelectorAll(`#step-${step} .error`).forEach(error => {
+                error.textContent = '';
+            });
+
+            if (step === 1) {
+                const nombre = document.getElementById('nombre').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const telefono = document.getElementById('telefono').value.trim();
+                
+                if (!nombre) {
+                    document.getElementById('nombre-error').textContent = 'Por favor ingrese su nombre';
+                    isValid = false;
+                }
+                
+                if (!email || !validateEmail(email)) {
+                    document.getElementById('email-error').textContent = 'Por favor ingrese un correo válido';
+                    isValid = false;
+                }
+                
+                if (!telefono || !validatePhone(telefono)) {
+                    document.getElementById('telefono-error').textContent = 'Por favor ingrese un teléfono válido';
+                    isValid = false;
+                }
+            }
+            
+            if (step === 2) {
+                const ciudad = document.getElementById('ciudad').value.trim();
+                const origen = document.getElementById('origen').value;
+                const interes = document.getElementById('interes').value;
+                const modelo = document.getElementById('modelo').value;
+                
+                if (!ciudad) {
+                    document.getElementById('ciudad-error').textContent = 'Por favor ingrese su ciudad';
+                    isValid = false;
+                }
+                
+                if (!origen) {
+                    document.getElementById('origen-error').textContent = 'Por favor seleccione una opción';
+                    isValid = false;
+                }
+                
+                if (!interes) {
+                    document.getElementById('interes-error').textContent = 'Por favor seleccione un interés';
+                    isValid = false;
+                }
+            }
+            
+            if (step === 3) {
+                const privacidad = document.getElementById('privacidad').checked;
+                
+                if (!privacidad) {
+                    document.getElementById('privacidad-error').textContent = 'Debe aceptar la política de privacidad';
+                    isValid = false;
+                }
+            }
+            
+            return isValid;
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[0-9]{10}$/;
+            return re.test(phone);
+        }
+
+function submitForm() {
+    if (validateStep(3)) {
+        const formData = {
+            nombre: document.getElementById('nombre').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            telefono: document.getElementById('telefono').value.trim(),
+            ciudad: document.getElementById('ciudad').value.trim(),
+            origen: document.getElementById('origen').value,
+            interes: document.getElementById('interes').value,
+            modelo: document.getElementById('modelo').value,
+            comentarios: document.getElementById('comentarios').value.trim(),
+            qrSource: window.location.search || 'default'
+        };
+
+        fetch("https://script.google.com/macros/s/AKfycbzqvGAVkB17ZvNVu9YX9t-mF28PuFcIt8dnaCkaS8kk-2fnNDe9bcVTU8G0bjIaAQpAeg/exec", {
+            method: "POST",
+            body: JSON.stringify(formData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            
+            if (data.status === 'OK') {
+                // Construir mensaje dinámico
+                    const modelo = document.getElementById("modelo").value;
+                    const mensaje = `Hola, quiero contactar un asesor, también estoy interesado en ${modelo}`;
+                
+                const numeroAsesor = "573176368977"; // Cambiar por número real
+                const urlWhatsApp = `https://wa.me/${numeroAsesor}?text=${encodeURIComponent(mensaje)}`;
+
+                // Asignar enlace al botón
+                document.querySelector('#success-message a').href = urlWhatsApp;
+
+                // Mostrar pantalla de éxito
+                document.getElementById('contactForm').style.display = 'none';
+                document.getElementById('success-message').style.display = 'block';
+            } else {
+                alert('Error al guardar: ' + data.message);
+            }
+        })
+        .catch(err => {
+            alert('Error de conexión: ' + err);
+        });
+    }
+}
+        // Inicializar con el primer paso visible
+        showStep(1);
+    </script>
+</body>
+</html>
