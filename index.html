@@ -386,23 +386,31 @@
                     </div>
                 </div>
 
-                <!-- Paso 3: Confirmación -->
-                <div class="form-step" id="step-3">
-                    <div class="form-group">
-                        <label for="comentarios">Comentarios adicionales</label>
-                        <input type="text" id="comentarios" name="comentarios">
-                    </div>
-                    <div class="form-group">
-                        <input type="checkbox" id="privacidad" name="privacidad" required>
-                        <label for="privacidad" style="display: inline;">Acepto la política de privacidad</label>
-                        <div class="error" id="privacidad-error"></div>
-                    </div>
-                    <div class="navigation-buttons">
-                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
-                        
-                        <button type="button" class="btn" onclick="submitForm()">Enviar</button>
-                    </div>
-                </div>
+<!-- Paso 3: Confirmación -->
+<div class="form-step" id="step-3">
+    <div class="form-group">
+        <label for="comentarios">Comentarios adicionales</label>
+        <input type="text" id="comentarios" name="comentarios">
+    </div>
+    <div class="form-group">
+        <input type="checkbox" id="privacidad" name="privacidad" required>
+        <label for="privacidad" style="display: inline;">Acepto la política de privacidad</label>
+        <div class="error" id="privacidad-error"></div>
+    </div>
+
+    <div class="navigation-buttons" id="step-3-buttons">
+        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">Anterior</button>
+        <button type="button" class="btn" onclick="submitForm()">Enviar</button>
+    </div>
+
+    <!-- Loader / mensaje de cargando -->
+    <div id="loading-message" class="completed-message" style="display: none; margin-top:20px; text-align:center;">
+        <div class="spinner"></div>
+        <h2>Enviando tu información...</h2>
+        <p>Por favor espera un momento.</p>
+    </div>
+</div>
+
             </form>
 
             <!-- Pantalla de éxito -->
@@ -524,9 +532,13 @@
             const re = /^[0-9]{10}$/;
             return re.test(phone);
         }
-
 function submitForm() {
     if (validateStep(3)) {
+        // ocultar botones
+        document.getElementById('step-3-buttons').style.display = 'none';
+        // mostrar loader
+        document.getElementById('loading-message').style.display = 'block';
+
         const formData = {
             nombre: document.getElementById('nombre').value.trim(),
             email: document.getElementById('email').value.trim(),
@@ -545,30 +557,33 @@ function submitForm() {
         })
         .then(res => res.json())
         .then(data => {
-            
             if (data.status === 'OK') {
-                // Construir mensaje dinámico
-                    const modelo = document.getElementById("modelo").value;
-                    const mensaje = `Hola, quiero contactar un asesor, también estoy interesado en ${modelo}`;
-                
-                const numeroAsesor = "573176368977"; // Cambiar por número real
+                const modelo = document.getElementById("modelo").value;
+                const mensaje = `Hola, quiero contactar un asesor, también estoy interesado en ${modelo}`;
+                const numeroAsesor = "573176368977";
                 const urlWhatsApp = `https://wa.me/${numeroAsesor}?text=${encodeURIComponent(mensaje)}`;
-
-                // Asignar enlace al botón
                 document.querySelector('#success-message a').href = urlWhatsApp;
 
-                // Mostrar pantalla de éxito
-                document.getElementById('contactForm').style.display = 'none';
+                // ocultar loader y mostrar éxito
+                document.getElementById('loading-message').style.display = 'none';
                 document.getElementById('success-message').style.display = 'block';
             } else {
                 alert('Error al guardar: ' + data.message);
+                resetStep3UI();
             }
         })
         .catch(err => {
             alert('Error de conexión: ' + err);
+            resetStep3UI();
         });
     }
 }
+
+function resetStep3UI() {
+    document.getElementById('loading-message').style.display = 'none';
+    document.getElementById('step-3-buttons').style.display = 'flex';
+}
+
         // Inicializar con el primer paso visible
         showStep(1);
     </script>
