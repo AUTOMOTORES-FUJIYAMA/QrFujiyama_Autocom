@@ -165,17 +165,23 @@
   </div>
 
   <!-- Modal de Privacidad -->
-  <div id="modal-privacidad" class="modal" style="display: none;">
-    <div class="modal-content">
-      <span class="close-modal" id="close-privacidad">&times;</span>
-      <h2>Política de Tratamiento de Datos</h2>
-      <p>De conformidad con la normativa vigente en protección de datos personales, autorizo el tratamiento de mis datos por parte de la empresa con fines comerciales, informativos y de contacto.</p>
-      <p>La información suministrada será utilizada para gestionar solicitudes, brindar información sobre productos y servicios, y realizar seguimiento comercial relacionado con los vehículos de interés.</p>
-      <p>El titular de los datos podrá ejercer sus derechos de acceso, corrección y supresión en cualquier momento mediante los canales oficiales de contacto.</p>
-      <button id="aceptar-privacidad" class="btn">Entendido</button>
-    </div>
-  </div>
+
 
   <script src="script.js"></script>
+
+    <div id="modal-privacidad" class="modal">
+      <div class="modal-content modal-large">
+
+        <span class="close-modal" id="close-privacidad">&times;</span>
+
+        <iframe 
+          src="tratamientoDeDatos.html"
+          frameborder="0"
+          class="privacy-frame">
+        </iframe>
+
+      </div>
+    </div>
+    
 </body>
 </html>
