@@ -288,8 +288,10 @@ function loadData() {
       origenesDisponibles = data.origenes || [];
       marcasDisponibles = data.marcas || [];  
       modelosPorMarca = data.modelosPorMarca || {};
+      ciudadesDisponibles = data.ciudades || [];
 
       initBrandModelFlow();
+      loadCiudades();
     })
     .catch(err => {
       console.error("Error cargando datos dinámicos", err);
@@ -335,7 +337,7 @@ function loadCiudades() {
     .then(res => res.json())
     .then(data => {
 
-      ciudadesDisponibles = data.flatMap(dep => dep.ciudades);
+      // ciudadesDisponibles = data.flatMap(dep => dep.ciudades);
 
       setupAutocomplete({
         inputId: 'ciudad-input',
@@ -349,4 +351,4 @@ function loadCiudades() {
       console.error("Error cargando ciudades", err);
     });
 }
-loadCiudades();
+// loadCiudades();
